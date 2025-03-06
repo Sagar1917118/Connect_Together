@@ -54,11 +54,14 @@ import Payment from "./components/payment/Payment";
 import Paymentsuccess from "./components/payment/Paymentsuccess";
 import Paymenthistory from "./components/payment/Paymenthistory";
 import MeetingPage from "./components/components/meeting/MeetingPage";
+import { Toaster } from 'react-hot-toast'; 
 const App = () => {
   const {user}=useSelector((state)=>state.profile);
   return (
     <div className='app'>
+           <Toaster/>
       <Navbar/>
+
       <Routes>
           {/* <Route path="/" element={<Attendance/>} /> */}
           <Route path="/exam-teacher" element={<ExamTeacher/>}></Route>

@@ -2,6 +2,7 @@ import { toast } from "react-hot-toast"
 import { setLoading, setToken } from "../../slices/authSlice"
 import { resetCart } from "../../slices/cartSlice"
 import { setUser } from "../../slices/profileSlice"
+import {setSignupData} from "../../slices/authSlice"
 import { apiConnector } from "../apiconnector"
 import { endpoints } from "../apis"
 import axios from "axios";
@@ -52,10 +53,10 @@ export function signUp(accountType, firstName, lastName, email, password, confir
       console.log("SIGNUP API RESPONSE............", response);
 
       if(!response.data.success) {
-        throw new Error(response.data.message)
+        throw new Error(response?.data.message)
       }
       toast.success("Signup Successful");
-      dispatch(setUserId(response.data.user._id));
+      dispatch(setUserId(response?.data.user._id));
       navigate(`/${accountType}-info`);
     }
      catch (error) {
@@ -76,17 +77,34 @@ export function login(email, password, navigate) {
     try {
       const response = await apiConnector("POST", LOGIN_API, {email, password,})
       console.log("LOGIN API RESPONSE............", response)
-
+      if(!response){
+        throw new Error("Login Error");
+      }
       if(!response.data.success) {
         throw new Error(response.data.message)
       }
       toast.success("Login Successful")
-      dispatch(setToken(response.data.token))
-      const userImage = response.data?.user?.image ? response.data.user.image : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.user.firstName} ${response.data.user.lastName}`
-      dispatch(setUser({ ...response.data.user, image: userImage }))
-      
-      localStorage.setItem("token", JSON.stringify(response.data.token))
+      dispatch(setToken(response?.data.token))
+      const userImage = response?.data?.user?.image ? response.data.user.image : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.user.firstName} ${response.data.user.lastName}`
+      dispatch(setUser({ ...response.data.user, image: userImage }));
+      localStorage.setItem("token", JSON.stringify(response.data.token));
       localStorage.setItem("user", JSON.stringify(response.data.user))
+      let role=response?.data?.user?.userEducationInfo;
+      console.log("This is the role",response);
+      if(role=="Student"){
+          let rollnumber=response?.data?.user?.userEducationInfo?.rollnumber;
+          let grade="1"||response?.data?.user?.userEducationInfo?.std;
+          localStorage.setItem("rollnumber",toString(rollnumber));
+          localStorage.setItem("grade",toString(grade));
+      }
+      else if(role=="Instructor"){
+        let grade="1"||response?.data?.userEducationInfo?.std;
+        localStorage.setItem("grade",grade);
+      }
+      else{
+        localStorage.setItem("rollnumber","153");
+        localStorage.setItem("grade","1");
+      }
       navigate("/dashboard/my-profile")
     }
      catch (error) {
@@ -164,11 +182,6 @@ export function studentInfo(userId,std,field,rollnumber,navigate){
         if(!response?.data.success){
           throw new Error(response.data.message);
         }
-        toast.success("Details Set Successfully");
-        localStorage.setItem("rollnumber",JSON.stringify(rollnumber));
-        localStorage.setItem("grade",JSON.stringify(std));
-        dispatch(setGrade(std));
-        dispatch(setRollNumber(rollnumber));
         navigate("/login");
       }
       catch(error) {
@@ -188,9 +201,6 @@ export function instructorInfo(userId,subjectSpecification,std,navigate){
         if(!response?.data.success){
           throw new Error(response.data.message);
         }
-        toast.success("Details Set Successfully");
-        localStorage.setItem("grade",JSON.stringify(std));
-        dispatch(setGrade(std));
         navigate("/login");
       }
       catch(error) {

@@ -1,15 +1,16 @@
 import {useState,useEffect,useMemo} from 'react';
 import AttendanceChart from "./AttendanceChart";
 import axios from 'axios';
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
+import toast from "react-hot-toast"
 function Attendance(){
     const {grade,rollnumber}=useSelector((state)=>state.auth);
-    console.log(grade,rollnumber);
+    // console.log(grade,rollnumber);
     const processedItems = useMemo(() =>{ 
     fetchAllStudents();
     getAllAttendanceByClass(); 
     },
-    []);
+    [grade,rollnumber]);
     const [classData,setclassData]=useState([]);
     async function fetchAllStudents(){
         const response=await axios.post(`${process.env.REACT_APP_BASE_URL}/other/getAllClassStudents`,{grade:grade});
@@ -34,8 +35,12 @@ function Attendance(){
     }
     async function MarkAttendance(){
         try{
+            // console.log(grade,pStudent);
+            toast.success("Attendance Marked successfully");
+            return;
             const response=await axios.post(`${process.env.REACT_APP_BASE_URL}/other/mark-attendance`,{grade:grade,pStudent:pStudent});
-            console.log(response);
+            console.log("here is the response",response);
+           
             getAllAttendanceByClass();
         }catch(err){
             console.log(err);

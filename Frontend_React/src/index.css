@@ -107,7 +107,6 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 9999;
   box-shadow: 0 0 10px #333;
 }
 /* Home.css */
@@ -509,6 +508,7 @@
   margin: auto;
   margin-top: 10px;
   margin-bottom: 10px;
+  padding:10px;
   gap:20px;
 }
 .particularSubject{
@@ -564,7 +564,8 @@
   margin-left: 20px;
 }
 .submitButton{
-  background-color: #BAFF39;
+  background-color:rgb(79, 70, 229);
+  color:white;
   width:100px;
   margin-left: 20px;
   margin-top: 20px;
@@ -603,3 +604,20 @@
 .studentAttendance{
   margin-top: 100px;
 }
+.loading_animation{
+  position:absolute;
+  top:200px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  aspect-ratio: 1;
+  --_c:no-repeat radial-gradient(farthest-side,#25b09b 92%,#0000);
+  background: 
+    var(--_c) top,
+    var(--_c) left,
+    var(--_c) right,
+    var(--_c) bottom;
+  background-size: 12px 12px;
+  animation: l7 1s infinite;
+}
+@keyframes l7 {to{transform: rotate(.5turn)}}

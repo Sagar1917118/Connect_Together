@@ -5,7 +5,7 @@ import 'react-calendar/dist/Calendar.css';
 import { useSelector } from 'react-redux'
 const StudentAttendance = () => {
     const {grade,rollnumber}=useSelector((state)=>state.auth);
-    console.log(grade,rollnumber);
+    // console.log(grade,rollnumber);
     const [date, setDate] = useState(new Date());
     const [status, setStatus] = useState("Absent");
     const [totalPresence, setTotalPresence] = useState([]);
@@ -22,6 +22,7 @@ const StudentAttendance = () => {
 
     const getAttendance = async () => {
         try {
+            // console.log(grade,formattedDate);
             const res = await fetch(`${process.env.REACT_APP_BASE_URL}/other/getattendancebydate`, {
                 method: "POST",
                 headers: {
@@ -30,7 +31,7 @@ const StudentAttendance = () => {
                 body: JSON.stringify({ grade:grade, date: formattedDate }),
             })
             const result = await res.json();
-            console.log("this is the result",result)
+            // console.log("this is the result",result);
             setTotalPresence(result.data[0]?.presence || []);
         } catch (err) {
             console.log(err)
@@ -52,7 +53,7 @@ const StudentAttendance = () => {
 
     return (
         <div className='myDiary'>
-            {console.log(totalPresence)}
+            {/* {console.log(totalPresence)} */}
             <div className='diary1'>
                 <h1 className='diaryHeading'>Attendance</h1>
                 <img src={attendanceImage} className='diaryImage' alt="attendance"></img>

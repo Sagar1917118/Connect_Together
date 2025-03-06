@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import homework from '../../assets/homework.jpg'
-
+import toast from 'react-hot-toast'
+import LoadingButton from './LoadingButton';
 const AddHomeworkSubject = () => {
     const location = useLocation();
     const { id: subjectId } = useParams();
     const grade = location.state.grade;
     const [question, setQuestion] = useState('');
     const navigate=useNavigate();
-
+    const [loading,setLoading]=useState(false);
     const handleSubmit = async (e) => {
         e.preventDefault();
         const today = new Date();
@@ -18,6 +19,11 @@ const AddHomeworkSubject = () => {
         const formattedDate = day + '-' + month + '-' + year;
 
         try {
+            if(!question){
+                toast.error("Empty Homework")
+                return;
+            }
+            setLoading(true);
             const response = await fetch('http://localhost:4000/api/v1/other/createhomework', {
                 method: 'POST',
                 headers: {
@@ -29,10 +35,13 @@ const AddHomeworkSubject = () => {
                 throw new Error('Failed to create homework');
             }
             const newHomework = await response.json();
-            console.log('Homework created:', newHomework);
+            // console.log('Homework created:', newHomework);
+            toast.success("Homework addedd!!");
+            setLoading(false);
             navigate("/mydiary");
         } catch (error) {
-            console.error('Error creating homework:', error);
+            setLoading(false);
+            toast.error("Error in Adding HomeWork");
         }
         
     };
@@ -53,7 +62,8 @@ const AddHomeworkSubject = () => {
                     onChange={(e) => setQuestion(e.target.value)}
 
                 />
-                <button type="submit" className='submitButton'>Submit</button>
+                {loading ? (<LoadingButton/>) :(<button type="submit" className='submitButton'>Submit</button>)}
+                
             </form>
             
         </div>

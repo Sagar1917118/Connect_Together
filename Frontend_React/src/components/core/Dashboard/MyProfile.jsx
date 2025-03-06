@@ -9,8 +9,8 @@ import App from "../../../App"
 export default function MyProfile(){
   const { user } = useSelector((state) => state.profile)
 const {socket}=useContext(AppContext);
-  useMemo(()=>{socket.emit("join-room",user._id);
-console.log("room joined",user._id)},[]);
+  useMemo(()=>{socket.emit("join-room",user?._id);
+console.log("room joined",user?._id)},[]);
 useEffect(()=>{
 socket.on("askdoubt",(msg)=>{
   console.log("ask doubt",msg);
