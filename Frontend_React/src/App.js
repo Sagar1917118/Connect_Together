@@ -47,7 +47,6 @@ import AddHomeworkSubject from './components/cumminComponents/AddHomeworkSubject
 import StudentAttendance from './components/cumminComponents/StudentAttendance'
 
 import Game from "./components/test/Games";
-import ScoreResult from "./components/test/test/ScoreResult";
 import BlogPage from "./components/blog/BlogPage";
 import Calender from "./components/calender/Calender";
 import Payment from "./components/payment/Payment";

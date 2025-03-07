@@ -138,28 +138,28 @@ const MathGame = () => {
             autoComplete="off"
             onChange={handleInputChange}
         />
-        <div className="game-container">
+        <div className="game-container border-4 border-indigo-600">
             <div className={`game${false ? ' winner' : time === 0 ? ' time-out' : time <= 10 ? ' time-running-out' : focused ? ' focused' : ''}`}>
-                <div className="game-data">
-                    <div>
-                        Mistakes: <strong>{mistakes}</strong>
+                <div className="game-data flex-wrap">
+                    <div className='border-2 border-indigo-600'>
+                        Mistakes: <strong className='text-red-600 text-xl'>{mistakes}</strong>
                     </div>
                     <div>
-                        Score: <strong>{score}</strong>
+                        Score: <strong className='text-green-700 text-xl'>{score}</strong>
                     </div>
                     <div>
-                        Time: <strong className={`${time === 0 ? 'text-danger' : ''}`}>{time}s</strong>
+                        Time: <strong className={`${time === 0 ? 'text-danger' : 'text-green-700'} text-xl`}>{time}s</strong>
                     </div>
                 </div>
                 {startGame && (
-                <div className="game-tip">
-                    <strong>Enter</strong> to submit.
+                <div className="game-tip text-2xl text-gray-700">
+                    Press Enter.
                 </div>
                 )}
-                <div className="game-content">
+                <div className="game-content bg-blue-300">
                     {!startGame ? (
                         <>
-                        <h4>
+                        <h4 className='text-blue-700'>
                             Select difficulty:
                         </h4>
                         <div className="difficulty">

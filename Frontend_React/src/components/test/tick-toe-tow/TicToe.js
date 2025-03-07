@@ -51,7 +51,9 @@ function TicToe() {
         const W = checkWinner();
         if (W) {
             setWinner(W);
+            setTimeout(()=>{setWinner(null)},[2000]);
         } else if (checkEndTheGame()) {
+            setTimeout(()=>{setWinner(null)},[2000]);
             setWinner("x | o");
         }
     };
@@ -63,9 +65,11 @@ function TicToe() {
     };
 
     return (
-        <div className="tic-tac-toe">
-            <h1 className="tioctoegame"> TIC-TAC-TOE </h1>
-            <Button resetGame={resetGame} />
+        <div className="tic-tac-toe border-4 border-indigo-600">
+                <div className="flex justify-between items-center">
+                    <h1 className="text-2xl font-bold text-indigo-600"> TIC-TAC-TOE </h1>
+                    <button className="text-2xl text-indigo-600 bg-indigo-300 px-2 py-1 rounded-md hover:bg-indigo-500" onClick={resetGame}>Reset</button>
+                </div>
             <div className="game">
                 {Array.from("012345678").map((ind) => (
                     <Square

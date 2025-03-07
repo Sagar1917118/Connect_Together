@@ -1,11 +1,22 @@
 import {useState,useEffect,useMemo} from 'react';
 import axios from 'axios';
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
+import toast, { ToastIcon } from 'react-hot-toast';
+import LoadingButton from './LoadingButton';
+const Skeleton = ({ width = "100%", height = "20px", className = "" }) => {
+    return (
+      <div
+        className={`bg-gray-300 animate-pulse rounded-md ${className}`}
+        style={{ width, height }}
+      ></div>
+    );
+  };
 function ExamTeacher(){
     const {grade,rollnumber}=useSelector((state)=>state.auth);
     const [allData,setAllData]=useState([]);
     const [subjectIds,setSubjectIds]=useState([]);
     const [examNames,setExamNames]=useState([]);
+    const [loading,setLoading]=useState(false);
     const processedItems = useMemo(() =>{ 
         GetAllExamByClassName()
         },
@@ -65,24 +76,27 @@ function ExamTeacher(){
         setIncludedIndex([...includedIndex,idx]);
         setmarksFormData(newData);
         }
+        else{
+            setIncludedIndex(includedIndex.filter((id) => id !== idx));
+            var tempMark=[];
+            marksFromData.forEach((ele)=>{
+                if(ele.rollNumber!=x){
+                    tempMark.push(ele);
+                }
+            })
+            setmarksFormData(tempMark);           
+            
+        }
         setcurrstumarks(0);
        
     }
-    //handler function to add marks to each student
-    // async function CreateSubject(){
-    //     try{
-    //         if(targetSubject==""||maxmarks==0||eType==""||marksFromData.length<=0){
-    //             alert("Complete All fileds");
-    //         }
-    //     }
-    //     catch(){
-
-    //     }
-    // }
     async function addMarksOfStudents(){
         try{
-            if(examId==""||marksFromData.length<=0){
-                alert("ExamId or record data is not available");
+            // console.log(examId,marksFromData);
+            setLoading(true);
+            if(examId==""||marksFromData.length<=1){
+                // alert("ExamId or record data is not available");
+                toast.error("Imcomplete data entries");
             }
             else{
                 try{
@@ -92,73 +106,113 @@ function ExamTeacher(){
                 catch(err){
                     console.log(err.message);
                 }
+                toast.success("Marks added successfully");
             }
+            setLoading(false)
         }
         catch(err){
-
+            toast.error("Error in Adding Marks");
+            console.log(err);
+            setLoading(false);
         }
     }
     const [examId,setExamId]=useState("");
+    const [examLoading,setExamLoading]=useState(false);
+    const [subjectLoading,setSubjectLoading]=useState(null);
     return(
-        <div className="mt-[60px] flex min-h-screen flex-col">
-            {console.log(allData,examNames,subjectIds)}
-            {examNames.length>0 &&
-                (<div className='mx-auto w-11/12 flex flex-col p-[20px] gap-10'>
-                   <div className='flex flex-col border-4 border-gray rounded-lg gap-6  p-6'>
-                   <p className='font-bold text-3xl'>Select Exam Type</p>
-                   <div className=' flex gap-[20px]'>
-                    {examNames.map((ele,idx)=>{
-                        return(
-                                    <button onClick={()=>{SelectSubject(ele)}} key={idx} className='w-[150px] h-[60px] border-gray border-4 rounded-md flex justify-center items-center text-[25px] hover:bg-gray-400'>
-                                        <p>{ele}</p>
-                                    </button>
-                                )
-                    })
-                    }
-                    </div>
-                    </div>
+        // ------------------------
+        <div className="mt-40 flex flex-col md:flex-row items-center md:items-start md:justify-center px-4 md:px-8 min-h-screen gap-4">
+              <div className='w-full md:w-1/2'>
+              <div className="w-full max-w-4xl p-6 border-4 border-indigo-600 rounded-lg shadow-md bg-white">
+                <h2 className="text-2xl font-bold text-center mb-4">Select Exam Type</h2>
+                <div className="flex flex-wrap justify-center gap-4">
+                  {examLoading
+                    ? [...Array(3)].map((_, i) => <Skeleton key={i} width={120} height={50} />)
+                    : examNames.map((ele, idx) => (
+                        <button
+                          key={idx}
+                         onClick={()=>{SelectSubject(ele)}}
+                          className={`min-w-[150px] px-4 py-2 rounded-md ${eType==ele?"bg-blue-800" :"bg-blue-400"} text-white text-lg  transition`}
+                        >
+                          {ele}
+                        </button>
+                      ))}
+              </div>
+             </div>
+             {subjectIds && subjectIds.length>0 && (
+                <div className="w-full max-w-4xl p-6 border-4 border-indigo-600 rounded-lg shadow-md bg-white mt-6">
+                  <h2 className="text-2xl font-bold text-center mb-4">Select the Subject</h2>
+                  <div className="flex flex-wrap justify-center gap-4">
+                    {subjectLoading
+                      ? [...Array(3)].map((_, i) => <Skeleton key={i} width={120} height={50} />)
+                      : subjectIds.map((ele, idx) => (
+                          <button
+                            key={idx}
+                            onClick={()=>{setTargetSubject(ele.SubjectId?.subjectName);setExamId(ele._id);fetchAllStudents()}}
+                            className={`min-w-[150px] px-4 py-2 rounded-md ${(targetSubject===ele.SubjectId.subjectName)?"bg-green-800":"bg-green-500"}  text-white text-lg  transition`}
+                            >
+                            {ele.SubjectId?.subjectName}
+                          </button>
+        
+                        ))}
+                  </div>
                 </div>
-                )
-                }
-                {
-                    subjectIds.length>0 &&
+              )}
+              </div>
+             <div className="w-full min-h-[420px] md:w-1/2 max-w-4xl p-6 border-4 border-indigo-600 rounded-lg shadow-md bg-white">
+                    {!classData || classData.length==0 ?(<div className='w-full h-full flex flex-col gap-3'>{[...Array(3)].map((_, i) => <Skeleton key={i} width={400} height={100} />)}</div>):
                     (
-                    <div className='mx-auto w-11/12 flex flex-col p-[20px] gap-10'>
-                    <div className='flex flex-col border-4 border-gray rounded-lg gap-6  p-6'>
-                    <p className='font-bold text-3xl'>Select the Subject</p>
-                    <div className=' flex gap-[20px]'>
-                        {subjectIds.map((ele,idx)=>{
-                            return(
-                                        <button onClick={()=>{setTargetSubject(ele.SubjectId?.subjectName);setExamId(ele._id);fetchAllStudents()}} key={idx} className='w-[150px] h-[60px] border-gray border-4 rounded-md flex justify-center items-center text-[25px] hover:bg-gray-400'>
-                                            <p>{ele.SubjectId?.subjectName}</p>
-                                        </button>
-                                    )
-                        })
-                        }
-                        </div>
-                        </div>
-                    </div>
-                    )
-                }
-                {/* adding class marks */}
-
-                <div className="mx-auto w-11/12 flex flex-col p-10 border-2 border-gray gap-3 mt-[20px]">
-                { classData.length>0 && <input className="w-[300px] h-[40px] p-2 border-2 border-gray" type="number" placeholder="Enter Maximum Marks" onChange={(e)=>{setMaxMarks(e.target.value)}}></input>
-}
-                { 
-                    classData.map((element,idx)=>{
-                        return(
-                            <div key={idx} className='flex justify-evenly text-xl border-2 border-gray rounded-md py-2'>
-                              <p className='font-bold'>{element}</p>
-                              <input className="border-2 border-black rounded-md p-1" type="number" max={maxmarks} onChange={(e)=>{setcurrstumarks(e.target.value)}}></input>
-                              <button className={`${includedIndex.includes(idx)?"border-green-500 bg-green-300":"border-red-500"} border-2 rounded-md px-2 py-1`} onClick={()=>{setEachStudentmarkDetail(element,currentstumarks,idx)} }>Add</button>
+                        <div className="w-full p-4 bg-gray-100 rounded-lg shadow-md">
+                        {classData.length > 0 && (
+                            <div className="mb-4">
+                            <label className="block text-lg font-semibold text-gray-700 mb-1">
+                                Enter Maximum Marks:
+                            </label>
+                            <div className='flex justify-between items-center gap-2'>
+                                <input
+                                    type="number"
+                                    className="flex flex-1 max-w-md p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
+                                    placeholder="Enter Maximum Marks"
+                                    onChange={(e) => setMaxMarks(e.target.value)}
+                                />
+                                {loading ? (<LoadingButton/>) : (
+                                 <button onClick={addMarksOfStudents}className='min-w-[100px] px-4 py-2 bg-indigo-600 rounded-md hover:bg-indigo-400 text-md text-white'>Submit</button>
+                                )}
+                                </div>
                             </div>
-                        )
-                    })
-                }
+                        )}
+
+                        <div className="space-y-4 max-h-[400px] overflow-y-scroll">
+                            {classData.map((element, idx) => (
+                            <div
+                                key={idx}
+                                className="flex flex-wrap items-center justify-between p-4 bg-white rounded-lg shadow-md border border-gray-300"
+                            >
+                                <p className="text-lg font-medium">{element}</p>
+
+                                <input
+                                type="number"
+                                max={maxmarks}
+                                className="w-24 p-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
+                                onChange={(e) => setcurrstumarks(e.target.value)}
+                                />
+
+                                <button
+                                className={`min-w-[80px] px-4 py-2 text-white font-medium rounded-md transition duration-200 ${
+                                    includedIndex.includes(idx)
+                                    ? "bg-red-500 hover:bg-red-600"
+                                    : "bg-green-500 hover:bg-green-600"
+                                }`}
+                                onClick={() => setEachStudentmarkDetail(element, currentstumarks, idx)}
+                                >
+                                {includedIndex.includes(idx) ? "Remove" : "Add"}
+                                </button>
+                            </div>
+                            ))}
+                        </div>
+                        </div>
+                    )}
             </div>
-            <button onClick={addMarksOfStudents}>Add Marks</button>
-            {console.log(eType,targetSubject,maxmarks,examId,marksFromData,classData)}     
         </div>
     )
 };

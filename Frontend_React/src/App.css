@@ -72,22 +72,6 @@
     height:100vw;
     border:2px solid red;
   } */
-  .heading-txt{
-    width:100%;
-    height:10%;
-  
-  
-    color:white;
-    /* color:#276272; */
-    font-size: 30px;
-    font-weight: bold;
-    margin: 10px;
-    text-align: center;  
-    text-transform: uppercase;
-    display: flex;
-    justify-content: center;
-    align-self: center;
-  }
   .testdiv{
     display: center;
     justify-content: center;
@@ -97,13 +81,12 @@
     /* border:2px solid red; */
     display: flex;
     align-items: center;
-    justify-content: center;
+    padding:2px 10px;
     flex-direction: column;
-    min-height: 400px;
+    min-height:300px;
     width: 400px;
     background-color: white;
     border-radius: 15px;
-    /* box-shadow: 2px 2px 10px 1px rgb(102, 3, 102); */
     box-shadow: 2px 2px 10px 1px #333;  
     overflow: hidden;
     padding: 10px;
@@ -111,7 +94,6 @@
   }
   
   .nextbutton{
-    /* border:2px solid red; */
     width:100%;
     height:auto;
     display: flex;
@@ -125,11 +107,11 @@
     margin:8px;
     box-shadow: 0px 0px 10px 1px #a2a3a3;
     border-radius: 5px;
-    padding:5px;
+    padding:2px;
     font-size: large;
     font-weight: 600;
     font-family: 'Times New Roman', Times, serif;
-    min-width: 100%;
+    width: 100%;
     min-height: 90px;
     display: flex;
     justify-content: center;
@@ -734,33 +716,17 @@
   
   .tic-tac-toe {
     width: fit-content;
-    margin: 40px auto;
+    margin:5px auto;
     text-align: center;
-    border:4px solid black; 
     padding:10px;
     border-radius:10px;
+    background-color:rgb(228, 214, 247);
   }
-  .tic-tac-toe h1 {
-    color: black;
-  }
+
   
-  .tic-tac-toe button {
-    padding: 8px 12px;
-    margin: 25px;
-    background: transparent;
-    border: 2px solid #eee;
-    color: #eee;
-    width: 100px;
-    border-radius: 5px;
-    transition: 0.2s;
-    font-weight: bold;
-    cursor: pointer;
-  }
+
   
-  .tic-tac-toe button:hover {
-    background: #eee;
-    color: #222;
-  }
+
   .tic-tac-toe .game {
     display: grid;
     grid-template-columns: repeat(3, 1fr);

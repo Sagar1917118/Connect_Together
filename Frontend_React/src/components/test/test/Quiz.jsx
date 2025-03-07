@@ -45,8 +45,8 @@ useEffect(()=>{
         setScore(0);
     }
   return (
-    <div className='Quiz'>
-        <p className="heading-txt">Quiz APP</p>
+    <div className='border-4 border-indigo-600 p-2 md:p-10 rounded-lg'>
+        <p className="text-indigo-600 text-2xl font-bold">Welcome to Quiz Game!!</p>
         <div className="container">
             {showResult&&
              (
@@ -62,7 +62,7 @@ useEffect(()=>{
 
             { (!showResult && datafecthed ) &&
             <div className='testdiv'>
-            <div className="question">
+            <div className="w-full text-black font-semibold mt-4 text-xl">
                 <span id="question-number">{currentQuestion+1}. </span>
                 <span id="question-txt">{QuizData[currentQuestion].question}</span>
             </div>

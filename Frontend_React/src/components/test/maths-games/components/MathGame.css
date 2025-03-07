@@ -1,5 +1,6 @@
 .game-container {
-    background-color: var(--color-main);
+    width:100%;
+    border-radius:10px;
     box-shadow: var(--box-shadow);
     border-radius: var(--border-radius-sm);
 }
@@ -106,22 +107,6 @@ h4 {
     flex-grow: 1;
     justify-self: flex-end;
     flex-grow: 0;
-}
-.answer {
-}
-input[type=number] {
-    font-size: 55px;
-}
-input[type=number]:focus {
-    outline: none;
-    border-color: var(--color-primary);
-}
-input[type=number],
-input[type=number]::-webkit-outer-spin-button,
-input[type=number]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    -moz-appearance: textfield;
-    margin: 0;
 }
 
 .game-tip {
