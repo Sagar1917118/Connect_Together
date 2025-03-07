@@ -1,19 +1,18 @@
-import React from 'react'
+import React from "react";
 
-const VideoCard = (props) => {
-      console.log(props.data)
+const VideoCard = ({ data }) => {
   return (
-      <div className='video-item'>
+    <div className="flex justify-center">
       <iframe
-        width='580'
-        height='340'
-        src={props.data}
-        frameBorder='0'
+        className="w-full h-auto aspect-video"
+        src={data}
+        width="150"
+        height="100"
+        frameBorder="0"
         allowFullScreen
       ></iframe>
-      
     </div>
-  )
-}
+  );
+};
 
-export default VideoCard
+export default VideoCard;
