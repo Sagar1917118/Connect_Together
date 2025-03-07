@@ -83,7 +83,7 @@ function StudentMarkPage() {
   }
 
   return (
-    <div className="mt-40 flex flex-col md:flex-row items-center md:items-start md:justify-center px-4 md:px-8 min-h-screen gap-4">
+    <div className="mt-10 flex flex-col md:flex-row items-center md:items-start md:justify-center px-4 md:px-8 min-h-screen gap-4">
       <div className='w-full md:w-1/2'>
       <div className="w-full max-w-4xl p-6 border-4 border-indigo-600 rounded-lg shadow-md bg-white">
         <h2 className="text-2xl font-bold text-center mb-4">Select Exam Type</h2>

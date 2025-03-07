@@ -9,7 +9,7 @@
   
   .BlogPage{
     width:100vw;
-    padding-top:100px;
+    padding-top:20px;
     border:2px solid green;
     display:flex;
     justify-content: center;
@@ -829,7 +829,7 @@
   /* ========================= */
 
   .Games{
-padding-top:100px;
+    padding-top:20px;
   }
   .blogvideodecider{
     display: flex;

@@ -1,110 +1,127 @@
-import React, { useEffect } from 'react'
-import "./App.css"
-import Home from './pages/Home'
-import { Route,Routes } from 'react-router-dom'
-import Navbar from './components/common/Navbar'
-import OpenRoute from './components/core/Auth/OpenRoute'
-import Signup from './pages/Signup'
-import Login from './pages/Login'
-// import VerifyEmail from './pages/VerifyEmail'
-import ForgotPassword from './pages/ForgotPassword'
-import UpdatePassword from './pages/UpdatePassword'
-import About from './pages/About'
-import Contact from './pages/Contact'
-import VerifyEmail from './pages/VerifyEmail'
-// import ForgotPassword from './pages/ForgotPassword'
-// import UpdatePassword from './pages/UpdatePassword'
-// import About from './pages/About'
-// import Contact from './pages/Contact'
-import MyProfile from "./components/core/Dashboard/MyProfile"
-import Settings from "./components/core/Dashboard/Settings"
-import PrivateRoute from "./components/core/Auth/PrivateRoute"
-import Dashboard from "./pages/Dashboard"
-import AttendQuestionPage from './pages/AttendQuestionPage'
-import AddHomework from './components/cumminComponents/AddHomework'
+import React from 'react';
+import "./App.css";
+import { Route, Routes } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Toaster } from 'react-hot-toast'; 
 
-//
-import StudentInfo  from './pages/StudentInfo';
-import InstructorInfo from './pages/InstructorInfo'
-//doubt
-import AskDoubt from "./components/core/Doubt/AskDoubt"
-import LiveStream from './pages/LiveStream'
-import { useSelector } from 'react-redux'
+// Common Components
+import Navbar from './components/common/Navbar';
+import OpenRoute from './components/core/Auth/OpenRoute';
+import PrivateRoute from './components/core/Auth/PrivateRoute';
+
+// Pages
+import Signup from './pages/Signup';
+import Login from './pages/Login';
+import VerifyEmail from './pages/VerifyEmail';
+import ForgotPassword from './pages/ForgotPassword';
+import UpdatePassword from './pages/UpdatePassword';
+import About from './pages/About';
+import Contact from './pages/Contact';
+import Dashboard from './pages/Dashboard';
+import AttendQuestionPage from './pages/AttendQuestionPage';
+import StudentInfo from './pages/StudentInfo';
+import InstructorInfo from './pages/InstructorInfo';
 import NotificationPage from './pages/NotificationPage';
-
 import Error from "./pages/Error";
-import ChatSection from './components/core/ChatSection/ChatSection'
-import MyDiary from './pages/MyDiary'
-import StudentMarkPage from './pages/StudentMarkPage'
+import MyDiary from './pages/MyDiary';
+import StudentMarkPage from './pages/StudentMarkPage';
 
-// socket
+// Dashboard Components
+import MyProfile from "./components/core/Dashboard/MyProfile";
+import Settings from "./components/core/Dashboard/Settings";
 
+// Doubt Section
+import AskDoubt from "./components/core/Doubt/AskDoubt";
 
+// Chat Section
+import ChatSection from './components/core/ChatSection/ChatSection';
+
+// Attendance & Exams
 import Attendance from "./components/cumminComponents/Attendance";
+import StudentAttendance from './components/cumminComponents/StudentAttendance';
 import ExamTeacher from "./components/cumminComponents/ExamTeacher";
-import CreateExam from "./components/cumminComponents/CreateExam";import CreateDiary from './components/cumminComponents/CreateDiary'
-import AddHomeworkSubject from './components/cumminComponents/AddHomeworkSubject'
-import StudentAttendance from './components/cumminComponents/StudentAttendance'
+import CreateExam from "./components/cumminComponents/CreateExam";
 
+// Homework & Diary
+import AddHomework from './components/cumminComponents/AddHomework';
+import CreateDiary from './components/cumminComponents/CreateDiary';
+import AddHomeworkSubject from './components/cumminComponents/AddHomeworkSubject';
+
+// Games & Blogs
 import Game from "./components/test/Games";
 import BlogPage from "./components/blog/BlogPage";
-import Calender from "./components/calender/Calender";
+
+// Payment
 import Payment from "./components/payment/Payment";
 import Paymentsuccess from "./components/payment/Paymentsuccess";
-import Paymenthistory from "./components/payment/Paymenthistory";
-import MeetingPage from "./components/components/meeting/MeetingPage";
-import { Toaster } from 'react-hot-toast'; 
+
+
+import Home from "./components/Hero/Home"
+
+
+
 const App = () => {
-  const {user}=useSelector((state)=>state.profile);
+  const { user } = useSelector((state) => state.profile);
+
   return (
-    <div className='app'>
-           <Toaster/>
-      <Navbar/>
-
+    <div className=''>
+      <Toaster />
+      <Navbar />
       <Routes>
-          {/* <Route path="/" element={<Attendance/>} /> */}
-          <Route path="/exam-teacher" element={<ExamTeacher/>}></Route>
-          <Route path="/create-exam" element={<CreateExam/>}></Route>
-          {/* ------------------------ */}
-          <Route path="/" element={<Home/>} />
-          <Route path="/Student-info" element={<StudentInfo/>} />
-          <Route path="/Instructor-info" element={<InstructorInfo/>}></Route>
-          <Route path="/signup" element = { <OpenRoute> <Signup /> </OpenRoute> } />
-          <Route path="/login" element = { <OpenRoute> <Login /> </OpenRoute> } />
-          <Route path="/forgot-password" element = { <OpenRoute> <ForgotPassword /> </OpenRoute> } />
-          <Route path="/update-password/:id" element = { <OpenRoute> <UpdatePassword /> </OpenRoute> } />
-          <Route path="about" element = {  <About /> } />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/verify-email" element = { <OpenRoute> <VerifyEmail /> </OpenRoute> } />
-          <Route element = {<PrivateRoute> <Dashboard /> </PrivateRoute>} >
-              <Route path="dashboard/my-profile" element={ < MyProfile />} /> 
-              <Route path="dashboard/Settings" element={<Settings />} /> 
-          </Route>
-          {user?.role==="Student" && <Route path="/askdoubt" element={<PrivateRoute> <AskDoubt></AskDoubt></PrivateRoute>}></Route>}
-          {user?.role==="Instructor" && <Route path="/notification" element={<PrivateRoute> <NotificationPage/></PrivateRoute>}></Route>}
-          {user?.role==="Instructor" && <Route path="/attend-question/:id" element={<PrivateRoute> <AttendQuestionPage /></PrivateRoute>}></Route>}
-          {user?.role==="Student" && <Route path="/mydiary" element={<MyDiary/>}></Route>}
-          {user?.role=="Student" && <Route path="/marks" element={<StudentMarkPage/>}/>}
-          {user?.role=="Instructor" && <Route path="/marks" element={<ExamTeacher/>}/>}
-          {user?.role=="Instructor" && <Route path="/marks/create-exam" element={<CreateExam/>}/>}
+        {/* Public Routes */}
+        <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<OpenRoute><Signup /></OpenRoute>} />
+        <Route path="/login" element={<OpenRoute><Login /></OpenRoute>} />
+        <Route path="/forgot-password" element={<OpenRoute><ForgotPassword /></OpenRoute>} />
+        <Route path="/update-password/:id" element={<OpenRoute><UpdatePassword /></OpenRoute>} />
+        <Route path="/verify-email" element={<OpenRoute><VerifyEmail /></OpenRoute>} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
 
-          {user?.role=="Instructor" && <Route path="/mydiary" element={<CreateDiary/>}/>}
-          {user?.role=="Instructor" && <Route path="/addhomework/:id" element={<AddHomeworkSubject/>}/>}
-          {user?.role=="Instructor" && <Route path="/attendance" element={<Attendance></Attendance>}/>}
-          {user?.role=="Student" && <Route path="/attendance" element={<StudentAttendance/>}/>}
-          <Route path="/chat-section" element={<PrivateRoute><ChatSection/></PrivateRoute>}></Route>
-          {user?.role=="Student" && <Route path="/games" element={<Game/>}/>}       
-          {/* {user?.role=="Student" && <Route path="/score-result" element={<ScoreResult/>}/>}        */}
-          {user?.role=="Student" && <Route path="/blog" element={<BlogPage/>}/>}       
-          {user && <Route path="/calender" element={<Calender/>}></Route>}
-          {user?.role=="Student" && <Route path="/payment" element={<Payment/>}/>}       
-          {user?.role=="Student" && <Route path="/paymentverification" element={<Paymentsuccess/>}/>}     
-          {user?.role=="Student" && <Route path="/payment-history" element={<Paymenthistory/>}/>}     
-          <Route path="/webinars" element={<MeetingPage/>}> </Route>
-<Route path="*" element={<Error/>}></Route>
+        {/* Dashboard Routes */}
+        <Route element={<PrivateRoute><Dashboard /></PrivateRoute>}>
+          <Route path="dashboard/my-profile" element={<MyProfile />} />
+          <Route path="dashboard/settings" element={<Settings />} />
+        </Route>
+
+        {/* Student Routes */}
+        {user?.role == "Student" && (
+          <>
+            <Route path="/askdoubt" element={<PrivateRoute><AskDoubt /></PrivateRoute>} />
+            <Route path="/mydiary" element={<MyDiary />} />
+            <Route path="/marks" element={<StudentMarkPage />} />
+            <Route path="/attendance" element={<StudentAttendance />} />
+            <Route path="/games" element={<Game />} />
+            <Route path="/blog" element={<BlogPage />} />
+            <Route path="/payment" element={<Payment />} />
+            <Route path="/paymentverification" element={<Paymentsuccess />} />
+          </>
+        )}
+
+        {/* Instructor Routes */}
+        {user?.role == "Instructor" && (
+          <>
+            <Route path="/notification" element={<PrivateRoute><NotificationPage /></PrivateRoute>} />
+            <Route path="/attend-question/:id" element={<PrivateRoute><AttendQuestionPage /></PrivateRoute>} />
+            <Route path="/marks" element={<ExamTeacher />} />
+            <Route path="/marks/create-exam" element={<CreateExam />} />
+            <Route path="/mydiary" element={<CreateDiary />} />
+            <Route path="/addhomework/:id" element={<AddHomeworkSubject />} />
+            <Route path="/attendance" element={<Attendance />} />
+          </>
+        )}
+
+        {/* General Routes */}
+        <Route path="/student-info" element={<StudentInfo />} />
+        <Route path="/instructor-info" element={<InstructorInfo />} />
+        <Route path="/create-exam" element={<CreateExam />} />
+        <Route path="/chat-section" element={<PrivateRoute><ChatSection /></PrivateRoute>} />
+
+        {/* Error Page */}
+        <Route path="*" element={<Error />} />
       </Routes>
     </div>
-  )
-}
+  );
+};
 
 export default App;

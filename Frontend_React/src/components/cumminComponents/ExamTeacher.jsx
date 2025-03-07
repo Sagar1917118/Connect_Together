@@ -28,6 +28,7 @@ function ExamTeacher(){
             setAllData(data);
         }
         catch(err){
+            toast.error("Error in getting class details");
             console.log(err);
         }
     }

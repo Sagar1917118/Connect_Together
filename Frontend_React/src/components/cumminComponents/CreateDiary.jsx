@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import HomeWorkReview from "./HomeWorkReview";
-import Loader from "./Loader";
+import toast from 'react-hot-toast'
 function Skeleton(){
     return(
         <div className="allSubjects grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
@@ -28,6 +28,7 @@ const CreateDiary = () => {
             const result = await response.json();
             setAllSubject(result.data); 
         } catch (error) {
+            toast.error("Error in fetching Class Detail");
             console.log("Error in getting all subjects");
         }
     }

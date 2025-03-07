@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useSelector } from 'react-redux';
 import image from "../../assets/online_payment.png";
 import { NavLink } from 'react-router-dom';
+import toast from 'react-hot-toast'
 const  Payment= () => {
   const {user}=useSelector((state)=>state.profile);
   const {grade,rollnumber}=useSelector((state)=>state.auth);
@@ -37,7 +38,8 @@ const  Payment= () => {
       checkoutHandler();
       };
 const checkoutHandler = async (amount) => {
-amount=12001;
+      amount=12001;
+      try{
       const response1=await fetch(`${process.env.REACT_APP_BACKEND_URL}/getkey`);
       const {key}=await response1.json();
       console.log(key);
@@ -88,58 +90,114 @@ amount=12001;
                     // Handle any errors that occur during the request
                   console.error("Error:", error);
                   }
-};
+                }
+                catch(err){
+                  console.log(err);
+                  toast.error("Error in Payment");
+                }
+          };
 
 
       return (
-      <div className='Payment'>
+      <div className='w-11/12 mx-auto'>
+          <div className="bg-indigo-200 mt-10 w-full mx-auto  p-6 rounded-lg shadow-lg border border-indigo-300">
+            <h2 className="text-2xl font-semibold text-indigo-700 mb-4">Add Student</h2>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className='flex flex-col md:flex-row gap-4'>
+              <div className='flex flex-1 flex-col'>
+                <label className="block text-lg font-medium text-indigo-700">Student ID</label>
+                <input
+                  type="text"
+                  name="studentId"
+                  value={formData.studentId}
+                  onChange={handleChange}
+                  className="w-full p-2 mt-1 border rounded-md bg-indigo-300  focus:ring-indigo-500 focus:border-indigo-500"
+                />
+              </div>
 
-<div className='formdiv'>
-<h2>Add Student</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Student ID:</label>
-          <input type="text" name="studentId" value={formData.studentId} onChange={handleChange} />
-        </div>
-        <div>
-          <label>Student Name:</label>
-          <input type="text" name="studentName" value={formData.studentName} onChange={handleChange} />
-        </div>
-        <div>
-            <label>Mobile Number:</label>
-            <input type="text" name="mobileNumber" value={formData.mobileNumber} onChange={handleChange} />
+              <div className='flex flex-1 flex-col'>
+                <label className="block text-lg font-medium text-indigo-700">Student Name:</label>
+                <input
+                  type="text"
+                  name="studentName"
+                  value={formData.studentName}
+                  onChange={handleChange}
+                  className="w-full p-2 mt-1 border rounded-md bg-indigo-300 focus:ring-indigo-500 focus:border-indigo-500"
+                />
+              </div>
+              </div>
+
+              <div className='flex flex-col md:flex-row gap-4'>
+              <div className='flex flex-1 flex-col'>
+              <label className="block text-lg font-medium text-indigo-700">Mobile Number:</label>
+                <input
+                  type="text"
+                  name="mobileNumber"
+                  value={formData.mobileNumber}
+                  onChange={handleChange}
+                  className="w-full p-2 mt-1 border rounded-md bg-indigo-300 focus:ring-indigo-500 focus:border-indigo-500"
+                />
+              </div>
+
+              <div className='flex flex-1 flex-col'>
+              <label className="block text-lg font-medium text-indigo-700">Class:</label>
+                <input
+                  type="text"
+                  name="studentClass"
+                  value={formData.studentClass}
+                  onChange={handleChange}
+                  className="w-full p-2 mt-1 border rounded-md bg-indigo-300 focus:ring-indigo-500 focus:border-indigo-500"
+                />
+              </div>
+              </div>
+
+              <div>
+                <label className="block text-lg font-medium text-indigo-700">Fee Type:</label>
+                <select
+                  name="feeType"
+                  value={formData.feeType}
+                  onChange={handleChange}
+                  className="w-full p-2 mt-1 border rounded-md bg-indigo-300 focus:ring-indigo-500 focus:border-indigo-500"
+                >
+                  <option value="">Select Fee Type</option>
+                  <option value="Tuition Fee">Tuition Fee</option>
+                  <option value="Extracurricular Activities">Extracurricular Activities</option>
+                  <option value="Travel Fee">Travel Fee</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-lg font-medium  text-indigo-700">Fee Amount:</label>
+                <input
+                  type="text"
+                  name="feeAmount"
+                  value={formData.feeAmount}
+                  onChange={handleChange}
+                  className="w-full p-2 mt-1 border rounded-md bg-indigo-300 focus:ring-indigo-500 focus:border-indigo-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-lg font-medium text-indigo-700">General Register Number:</label>
+                <input
+                  type="text"
+                  name="collegeId"
+                  value={formData.collegeId}
+                  onChange={handleChange}
+                  className="w-full p-2 mt-1 border rounded-md bg-indigo-300 focus:ring-indigo-500 focus:border-indigo-500"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full bg-indigo-700 text-white py-2 rounded-md hover:bg-indigo-800 transition"
+              >
+                Submit
+              </button>
+            </form>
           </div>
-        <div>
-          <label>Class:</label>
-          <input type="text" name="studentClass" value={formData.studentClass} onChange={handleChange} />
-        </div>
-        <div>
-          <label>Fee Type:</label>
-          <select name="feeType" value={formData.feeType} onChange={handleChange}>
-            <option value="">Select Fee Type</option>
-            <option value="Tuition Fee">Tuition Fee</option>
-            <option value="Extracurricular Activities">Extracurricular Activities</option>
-            <option value="Travel Fee">Travel Fee</option>
-          </select>
-        </div>
-        <div>
-          <label>Fee Amount:</label>
-          <input type="text" name="feeAmount" value={formData.feeAmount} onChange={handleChange} />
-        </div>
-        <div>
-          <label>General Register Number:</label>
-          <input type="text" name="collegeId" value={formData.collegeId} onChange={handleChange} />
-        </div>
-        <button type="submit">Submit</button>
-      </form>
-</div>
-<NavLink to="payment-history">
-<div className='flex flex-col gap-10 border-4
- border-black rounded-2xl p-2 items-center hover:bg-gray-400'>
-  <img src={image} className='w-[300px] h-[200px] rounded-2xl'></img>
-  <div className='font-bold text-2xl'>View Past Transcations </div>
-  </div>
-  </NavLink>
+
+          
       </div>
       )
 }

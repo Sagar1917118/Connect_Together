@@ -447,8 +447,8 @@
   color:black;
 }
 .myDiary{
-  margin-top: 100px;
-  margin-left: 50px;
+  padding-top:10px;
+  padding-left:30px;
 }
 .diary1{
   display: flex;

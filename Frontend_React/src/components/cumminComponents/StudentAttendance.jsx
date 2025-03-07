@@ -58,13 +58,13 @@ const StudentAttendance = () => {
                 <h1 className='diaryHeading'>Attendance</h1>
                 <img src={attendanceImage} className='diaryImage' alt="attendance"></img>
             </div>
-            <div className='diaryMain'>
-                <div className='homeworkDet'>
-                    <div className='homeworkSub'>Date: {formattedDate}</div>
-                    <div className='homeworkQues'>{status}</div>
+            <div className='mt-2 w-11/12 flex flex-col md:flex-row gap-2 bg-indigo-100 rounded-md p-2 justify-between'>
+                <div className='flex flex-1 flex-col p-2'>
+                    <div className='text-lg text-indigo-600 font-bold'>Date: {formattedDate}</div>
+                    <div className={`text-2xl font-bold ${(status=='Present')?"text-green-600":"text-red-600"}`}>{status}</div>
                 </div>
                 <div>
-                    <Calendar showWeekNumbers onChange={changeDate} value={date} />
+                <Calendar showWeekNumbers onChange={changeDate} value={date} />
                 </div>
             </div>
         </div>

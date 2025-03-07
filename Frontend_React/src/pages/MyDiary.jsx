@@ -4,7 +4,7 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-
+import toast from 'react-hot-toast'
 function Skeleton() {
     return (
         <div className="flex flex-col gap-4 p-4">
@@ -39,6 +39,7 @@ const MyDiary = () => {
             const result = await response.json();
             setHomeworkDet(result);
         } catch (error) {
+            toast.error("Error in getting Homework")
             console.error('Error fetching homework:', error);
         }
     };
