@@ -46,7 +46,7 @@ function LoginForm(){
                 
         </label>
 
-        <button className='bg-[#BAFF39] rounded-[8px] font-bold text-richblack-900 px-[12px] py-[8px] mt-6'> Sign In </button>
+        <button className='bg-indigo-600 rounded-[8px] font-bold text-white px-[12px] py-[8px] mt-6'> Sign In </button>
     
     </form>
     </div>

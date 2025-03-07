@@ -9,11 +9,14 @@ const SideBar = () => {
   const myObj=useRef();
 const {url}=useContext(AppContext);
   const fetchData=async()=>{
+    try{
   const response=await fetch(`${url}rooms/`);
   const data =await response.json();
   console.log(data);
   setallRooms(data);
-
+    }catch(err){
+      console.log(err);
+    }
   } 
 
 useEffect(()=>{

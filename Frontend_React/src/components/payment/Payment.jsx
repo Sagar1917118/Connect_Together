@@ -27,6 +27,10 @@ const  Payment= () => {
   
     const handleSubmit = async (e) => {
       e.preventDefault();
+      if(!formData.studentId||!formData.studentName||!formData.studentClass||!formData.feeType||!formData.feeAmount||!formData.collegeId||!formData.mobileNumber){
+        toast.error("All fileds are required");
+        return;
+      }
       // console.log("hello ji ",process.env.PAYMENTCALLBACKURL)
       // try {
       //   await axios.post('http://your-backend-url/addStudent', formData);

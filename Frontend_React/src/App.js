@@ -85,36 +85,36 @@ const App = () => {
         </Route>
 
         {/* Student Routes */}
-        {user?.role == "Student" && (
+        {(!user||user?.role == "Student" )&& (
           <>
             <Route path="/askdoubt" element={<PrivateRoute><AskDoubt /></PrivateRoute>} />
-            <Route path="/mydiary" element={<MyDiary />} />
-            <Route path="/marks" element={<StudentMarkPage />} />
-            <Route path="/attendance" element={<StudentAttendance />} />
-            <Route path="/games" element={<Game />} />
-            <Route path="/blog" element={<BlogPage />} />
-            <Route path="/payment" element={<Payment />} />
-            <Route path="/paymentverification" element={<Paymentsuccess />} />
+            <Route path="/mydiary" element={<PrivateRoute><MyDiary /></PrivateRoute>} />
+            <Route path="/marks" element={<PrivateRoute><StudentMarkPage /></PrivateRoute>} />
+            <Route path="/attendance" element={<PrivateRoute><StudentAttendance /></PrivateRoute>} />
+            <Route path="/games" element={<PrivateRoute><Game /></PrivateRoute>} />
+            <Route path="/blog" element={<PrivateRoute><BlogPage /></PrivateRoute>} />
+            <Route path="/payment" element={<PrivateRoute><Payment /></PrivateRoute>} />
+            <Route path="/paymentverification" element={<PrivateRoute><Paymentsuccess /></PrivateRoute>} />
           </>
         )}
 
         {/* Instructor Routes */}
-        {user?.role == "Instructor" && (
+        {(!user||user?.role == "Instructor" )&& (
           <>
             <Route path="/notification" element={<PrivateRoute><NotificationPage /></PrivateRoute>} />
             <Route path="/attend-question/:id" element={<PrivateRoute><AttendQuestionPage /></PrivateRoute>} />
-            <Route path="/marks" element={<ExamTeacher />} />
-            <Route path="/marks/create-exam" element={<CreateExam />} />
-            <Route path="/mydiary" element={<CreateDiary />} />
-            <Route path="/addhomework/:id" element={<AddHomeworkSubject />} />
-            <Route path="/attendance" element={<Attendance />} />
+            <Route path="/marks" element={<PrivateRoute><ExamTeacher /></PrivateRoute>} />
+            <Route path="/marks/create-exam" element={<PrivateRoute><CreateExam /></PrivateRoute>} />
+            <Route path="/mydiary" element={<PrivateRoute><CreateDiary /></PrivateRoute>} />
+            <Route path="/addhomework/:id" element={<PrivateRoute><AddHomeworkSubject /></PrivateRoute>} />
+            <Route path="/attendance" element={<PrivateRoute><Attendance /></PrivateRoute>} />
+            <Route path="/create-exam" element={<PrivateRoute><CreateExam /></PrivateRoute>} />
           </>
         )}
 
         {/* General Routes */}
         <Route path="/student-info" element={<StudentInfo />} />
         <Route path="/instructor-info" element={<InstructorInfo />} />
-        <Route path="/create-exam" element={<CreateExam />} />
         <Route path="/chat-section" element={<PrivateRoute><ChatSection /></PrivateRoute>} />
 
         {/* Error Page */}

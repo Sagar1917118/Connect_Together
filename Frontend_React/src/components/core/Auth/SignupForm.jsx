@@ -118,7 +118,7 @@ function SignupForm() {
 
         </div>
 
-        <button  type="submit"  className = "mt-6 rounded-[8px] bg-[#BAFF39] py-[8px] px-[12px] font-bold text-richblack-900 ">  Create Account </button>
+        <button  type="submit"  className = "mt-6 rounded-[8px] bg-indigo-600  py-[8px] px-[12px] font-bold text-white ">  Create Account </button>
 
 
       </form>
