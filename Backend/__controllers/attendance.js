@@ -4,7 +4,7 @@ async function markAttendance(req,res){
     try{
         const {grade,pStudent}=req.body;
         // console.log(grade,pStudent);
-        if(!grade[0]||pStudent.length==0){
+        if(!grade || !pStudent || pStudent.length==0){
             return res.status(400).json({
                  success:false,
                  message:"all details are not availabel",
@@ -16,7 +16,7 @@ async function markAttendance(req,res){
         const day = today.getDate();
         const todaydate=day+"-"+month+"-"+year;
         // console.log(todaydate);
-        const attendanceDb=await Attendance.create({date:todaydate,grade:grade[0]});
+        const attendanceDb=await Attendance.create({date:todaydate,grade:grade});
         const updatedAttendance=await Attendance.findByIdAndUpdate(attendanceDb._id,{presence:pStudent},{new:true});
         // pStudent.forEach(async (ele)=>{
         //     await Attendance.findByIdAndUpdate(attendanceDb._id,{$push:{presence:ele}});
