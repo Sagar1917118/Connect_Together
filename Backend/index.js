@@ -20,23 +20,18 @@ const allowedOrigins = [
    process.env.FRONTEND_URL
 ];
 
-const corsMiddleware = (req, res, next) => {
-  const origin = req.headers.origin;
-  
-  if (allowedOrigins.includes(origin)) {
-      res.setHeader("Access-Control-Allow-Origin", origin);
-  }
-
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-
-  if (req.method === "OPTIONS") {
-      return res.sendStatus(200);
-  }
-
-  next();
-};
+app.use(cors({
+  origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+          callback(null, origin);
+      } else {
+          callback(new Error("Not allowed by CORS"));
+      }
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
 
 
 app.use(express.json());
@@ -45,11 +40,11 @@ app.use(express.urlencoded({extended:false}));
 app.use(fileUpload({useTempFiles:true,tempFileDir:'/tmp/'} ));
 
 dbConnect();
-app.use("/api/v1/auth",corsMiddleware,authRoute);
-app.use("/api/v1/profile",corsMiddleware,profileRoute);
-app.use("/api/v1/course",corsMiddleware,courseRoute);
-app.use("/api/v1/doubt",corsMiddleware,myRoutes);
-app.use("/api/v1/other",corsMiddleware,otherRoutes);
+app.use("/api/v1/auth",authRoute);
+app.use("/api/v1/profile",profileRoute);
+app.use("/api/v1/course",courseRoute);
+app.use("/api/v1/doubt",myRoutes);
+app.use("/api/v1/other",otherRoutes);
 
 app.get("/",(req,res)=>{
     return res.send("Welcome to my backend Page");
