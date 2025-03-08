@@ -15,7 +15,7 @@ const myRoutes=require("./routes/myroutes");
 const otherRoutes=require("./routes/otherRoute");
 const fileUpload=require("express-fileupload");
 app.use(cors({
-    origin:[`http://localhost:3000`,'http://10.2.8.189:3000',process.env.FRONTEND_URL],
+    origin:[process.env.FRONTEND_URL],
     credentials:true,
 }))
 
@@ -36,6 +36,13 @@ app.use("/api/v1/other",otherRoutes);
 
 app.get("/",(req,res)=>{
     return res.send("Welcome to my backend Page");
+});
+
+
+//  Start the Server
+const PORT = process.env.BACKEND_PORT || 4000;
+const server = app.listen(PORT, () => {
+  console.log(`Server is running successfully on port: ${PORT}`);
 });
 
 // 
@@ -224,11 +231,6 @@ app.get("/getscore/:studentid", async (req, resp) => {
   }
 });
 
-//  Start the Server
-const PORT = process.env.BACKEND_PORT || 5000;
-const server = app.listen(PORT, () => {
-  console.log(`Server is running successfully on port: ${PORT}`);
-});
 
 //  Handle Uncaught Errors
 process.on("unhandledRejection", (err) => {
