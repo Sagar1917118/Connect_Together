@@ -73,16 +73,23 @@ export function login(email, password, navigate) {
     const toastId = toast.loading("Loading...")
     dispatch(setLoading(true))
     try {
-      const response = await apiConnector("POST", LOGIN_API, {email, password,})
+      // const response = await apiConnector("POST", LOGIN_API, {email, password,})
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/api/v1/auth/login`,
+        { email, password },
+        {
+            withCredentials: true,  // Important for cookies
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }
+    );
       console.log("LOGIN API RESPONSE............", response)
       if(!response){
         throw new Error("Login Error");
       }
-      if(!response.data.success) {
-        throw new Error(response.data.message)
-      }
       toast.success("Login Successful")
-      dispatch(setToken(response?.data.token))
+      dispatch(setToken(response?.data?.token))
       const userImage = response?.data?.user?.image ? response.data.user.image : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.user.firstName} ${response.data.user.lastName}`
       dispatch(setUser({ ...response.data.user, image: userImage }));
       localStorage.setItem("token", JSON.stringify(response.data.token));
