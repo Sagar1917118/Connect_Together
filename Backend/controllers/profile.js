@@ -137,7 +137,7 @@ async function getAllUserDetails(req,res){
             userDetails,
           })
     }catch(err){
-        console.log("Error in fecthing all detail of the user");
+        console.log("Error in fecthing all detail of the user",err.message);
         return res.status(500).json({
             success: false,
             message: err,

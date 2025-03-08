@@ -29,6 +29,7 @@ async function handelResetPasswordToken(req,res){
             message:"Token Url is generated and Send on Email successfully"
         })
     }catch(err){
+        console.log("Error in changing password",err.message);
         return res.status(500).json({
             success:false,
             message:err.message

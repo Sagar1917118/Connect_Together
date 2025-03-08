@@ -18,7 +18,7 @@ async function creatingExam(req,res){
         })
     }
     catch(err){
-        console.log("error in creating a exam",err);
+        console.log("error in creating a exam",err.message);
         return res.status(500).json({
             success:false,
             message:err.message,
@@ -43,7 +43,7 @@ async function addingMarks(req,res){
         })
     }
     catch(err){
-        console.log("error in adding marks",err);
+        console.log("error in adding marks",err.message);
         return res.status(500).json({
             success:false,
             message:err.message,
@@ -68,7 +68,7 @@ async function dispalyAllExamByClass(req,res){
         })
     }
     catch(err){
-        console.log("Error in fetching exam by grade",err);
+        console.log("Error in fetching exam by grade",err.message);
         return res.status(500).json({
             success:false,
             message:err.message,

@@ -13,6 +13,7 @@ const getExamsByGrade = async (req, res) => {
         // Return the results
         res.json({ examNames });
     } catch (error) {
+        console.log("Error in getting exam by grade",err.message);
         res.status(500).json({ message: error.message });
     }
 };
@@ -35,6 +36,7 @@ const getSubjectsByExamName = async (req, res) => {
         // Return the results
         res.json({ subjectName });
     } catch (error) {
+        console.log("Error in getting subject by exam name",err.message);
         res.status(500).json({ message: error.message });
     }
 };
@@ -75,6 +77,7 @@ const getMarksBySubjectId = async (req, res) => {
         // Return the results
         res.json({ classAverageMarks, studentMarks, studentAverageMarks });
     } catch (error) {
+        console.log("Error in getting marks by subject id",err.message);
         res.status(500).json({ message: error.message });
     }
 };

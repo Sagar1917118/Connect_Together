@@ -24,7 +24,7 @@ async function createSubject(req,res){
         })
 
     }catch(err){
-        console.log("Error in creating subject");
+        console.log("Error in creating subject",err.message);
         return res.status(500).json({
             success:false,
             message:err.message,
@@ -41,7 +41,7 @@ async function addHomework(req,res){
         })
     }
     catch(err){
-        console.log("error in adding homework");
+        console.log("error in adding homework",err.message);
         return res.status(500).json({
             success:false,
             message:err.message,
@@ -64,7 +64,7 @@ async function fetchAllSubjectsByGrade(req,res){
         })
     }
     catch(err){
-        console.log(err);
+        console.log("Error in fetching subject",err.message);
         return res.status(500).json({
             success:false,
             message:err.message,
@@ -81,7 +81,7 @@ async function fetchAllSubject(req,res){
         message:"all subject fetch successfully"
        })
     }catch(error){
-        console.log("error in fetchin homework");
+        console.log("error in fetchin homework",err.message);
         return res.status(500).json({
             success:false,
             message:err.message,

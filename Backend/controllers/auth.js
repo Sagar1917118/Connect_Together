@@ -103,7 +103,7 @@ async function handelSignUp(req,res){
         });
      
     }catch(err){
-        // console.log("Error in singup",err);
+        console.log("Error in singup",err);
         return res.status(500).json({
             success:false,
             message:err
@@ -169,7 +169,7 @@ async function handelLogin(req,res){
             })
         }
     }catch(err){
-        // console.log("Error in Login");
+        console.log("Error in Login");
         return res.status(500).json({
             success:false,
             message:err.message,
@@ -208,7 +208,7 @@ async function handelStudentInfo(req,res){
             response,
         })
     }catch(err){
-        // console.log("Error in adding student detials",err);
+        console.log("Error in adding student detials",err);
         return res.status(500).json({
             success:false,
             message:err.message,

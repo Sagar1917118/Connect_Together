@@ -7,6 +7,7 @@ const createHomework = async (req, res) => {
       await newHomework.save();
       res.status(201).json(newHomework);
     } catch (error) {
+      console.log("Error in creating homework",err.message);
       res.status(500).json({ message: error.message });
     }
   };
@@ -17,6 +18,7 @@ const getHomeworkByDateAndGrade = async (req, res) => {
     // console.log(homework);
     res.json(homework);
   } catch (error) {
+    console.log("Error in get homework",err.message);
     res.status(500).json({ message: error.message });
   }
 };
@@ -36,7 +38,7 @@ const getHomeworkByDateAndGrade = async (req, res) => {
         dbResponse,
       })
   }catch(err){
-    console.log(err);
+    console.log("Error in homework review",err);
     return res.status(500).json({
       success:false,
       message:err.message,
@@ -60,7 +62,7 @@ const fetchHomeWorkReview=async (req,res)=>{
         dbResponse,
       })
   }catch(err){
-    console.log(err);
+    console.log("Error in fetching homework review",err.message);
     return res.status(500).json({
       success:false,
       message:err.message,

@@ -10,7 +10,7 @@ async function getAllStudents(req,res){
         })
     }
     catch(err){
-        console.log("Error in fetching the class details",err);
+        console.log("Error in fetching the class details",err.message);
         return res.status(500).json({
             success:false,
             message:err.message,
