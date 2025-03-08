@@ -17,7 +17,7 @@ const fileUpload=require("express-fileupload");
 
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://connect-together-six.vercel.app"
+   process.env.FRONTEND_URL
 ];
 
 app.use(cors({
