@@ -24,7 +24,7 @@ const AddHomeworkSubject = () => {
                 return;
             }
             setLoading(true);
-            const response = await fetch('http://localhost:4000/api/v1/other/createhomework', {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/other/createhomework`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

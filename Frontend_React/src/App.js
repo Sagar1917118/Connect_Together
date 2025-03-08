@@ -98,11 +98,9 @@ const App = () => {
           <>
             <Route path="/notification" element={<PrivateRoute><NotificationPage /></PrivateRoute>} />
             <Route path="/marks" element={<PrivateRoute><ExamTeacher /></PrivateRoute>} />
-            <Route path="/marks/create-exam" element={<PrivateRoute><CreateExam /></PrivateRoute>} />
             <Route path="/mydiary" element={<PrivateRoute><CreateDiary /></PrivateRoute>} />
             <Route path="/addhomework/:id" element={<PrivateRoute><AddHomeworkSubject /></PrivateRoute>} />
             <Route path="/attendance" element={<PrivateRoute><Attendance /></PrivateRoute>} />
-            <Route path="/create-exam" element={<PrivateRoute><CreateExam /></PrivateRoute>} />
           </>
         )}
 

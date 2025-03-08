@@ -19,7 +19,7 @@ const CreateDiary = () => {
 
     const fetchSubjects = async () => {
         try {
-            const response = await fetch("http://localhost:4000/api/v1/other/getallsubject", {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/other/getallsubject`, {
                 method: "GET",
                 headers: {
                     'Content-Type': 'application/json',

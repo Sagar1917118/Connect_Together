@@ -11,7 +11,7 @@ function AppContextProvider({ children }) {
   const { user } = useSelector((state) => state.profile);
   const [currentDoubt, setCurrentDoubt] = useState();
 
-  const url = "http://localhost:4000/";
+  const url = `${process.env.REACT_APP_BACKEND_URL}/`;
 
   // Dummy socket to avoid errors
   const dummySocket = {

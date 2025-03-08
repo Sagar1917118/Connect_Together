@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import toast, { ToastIcon } from 'react-hot-toast';
 import LoadingButton from './LoadingButton';
+import CreateExam from './CreateExam';
+import { FaRegFileAlt } from "react-icons/fa";
 const Skeleton = ({ width = "100%", height = "20px", className = "" }) => {
     return (
       <div
@@ -11,12 +13,26 @@ const Skeleton = ({ width = "100%", height = "20px", className = "" }) => {
       ></div>
     );
   };
+  function ExamButton({setCreateExam}) {  
+    return (
+      <button
+        onClick={() => setCreateExam((prev) => !prev)}
+        className="relative flex items-center justify-center w-14 h-14 bg-blue-500 text-white rounded-full hover:w-32 transition-all duration-300 overflow-hidden"
+      >
+        <FaRegFileAlt size={24} />
+        <span className="z-10 text-center absolute opacity-0 hover:opacity-100 transition-opacity duration-300 text-black ml-8">
+          Create Exam
+        </span>
+      </button>
+    );
+  }
 function ExamTeacher(){
     const {grade,rollnumber}=useSelector((state)=>state.auth);
     const [allData,setAllData]=useState([]);
     const [subjectIds,setSubjectIds]=useState([]);
     const [examNames,setExamNames]=useState([]);
     const [loading,setLoading]=useState(false);
+    const [createExam, setCreateExam] = useState(false);
     const processedItems = useMemo(() =>{ 
         GetAllExamByClassName()
         },
@@ -64,7 +80,7 @@ function ExamTeacher(){
 
     async function fetchAllStudents(){
         const response=await axios.post(`${process.env.REACT_APP_BASE_URL}/other/getAllClassStudents`,{grade:grade});
-        console.log(response);
+        // console.log(response);
         const arr=response?.data?.classDb?.rollnumber
         setclassData(arr); 
     }
@@ -102,7 +118,7 @@ function ExamTeacher(){
             else{
                 try{
                 const response=await axios.post(`${process.env.REACT_APP_BASE_URL}/other/adding-marks`,{examId:examId,record:marksFromData});
-                console.log(response);
+                // console.log(response);
                 }
                 catch(err){
                     console.log(err.message);
@@ -122,7 +138,8 @@ function ExamTeacher(){
     const [subjectLoading,setSubjectLoading]=useState(null);
     return(
         // ------------------------
-        <div className="mt-40 flex flex-col md:flex-row items-center md:items-start md:justify-center px-4 md:px-8 min-h-screen gap-4">
+        <div className="relative mt-40 flex flex-col md:flex-row items-center md:items-start md:justify-center px-4 md:px-8 min-h-screen gap-4">
+             {createExam && (<CreateExam setCreateExam={setCreateExam} GetAllExamByClassName={GetAllExamByClassName}></CreateExam>)}
               <div className='w-full md:w-1/2'>
               <div className="w-full max-w-4xl p-6 border-4 border-indigo-600 rounded-lg shadow-md bg-white">
                 <h2 className="text-2xl font-bold text-center mb-4">Select Exam Type</h2>
@@ -138,6 +155,7 @@ function ExamTeacher(){
                           {ele}
                         </button>
                       ))}
+                      <ExamButton setCreateExam={setCreateExam}></ExamButton>
               </div>
              </div>
              {subjectIds && subjectIds.length>0 && (

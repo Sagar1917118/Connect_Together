@@ -29,7 +29,7 @@ const MyDiary = () => {
     const fetchHomework = async () => {
         try {
             setHomeworkDet(null);
-            const response = await fetch('http://localhost:4000/api/v1/other/homework', {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/other/homework`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ grade, date: dateMatch }),
