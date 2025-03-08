@@ -20,35 +20,26 @@ const allowedOrigins = [
    process.env.FRONTEND_URL
 ];
 
-app.use(cors({
-  origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-          callback(null, true);
-      } else {
-          callback(new Error("CORS not allowed"));
-      }
-  },
-  credentials: true,  // Important for cookies
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
-
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", process.env.FRONTEND_URL);
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+      res.header("Access-Control-Allow-Origin", origin);
+  }
   res.header("Access-Control-Allow-Credentials", "true");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+  if (req.method === "OPTIONS") {
+      return res.sendStatus(200);
+  }
+  next();
+});
 
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({extended:false}));
-app.use(fileUpload(
-    {useTempFiles:true,
-    tempFileDir:'/tmp/'} 
-    ));
-  next();
-});
+app.use(fileUpload({useTempFiles:true,tempFileDir:'/tmp/'} ));
 dbConnect();
 app.use("/api/v1/auth",authRoute);
 app.use("/api/v1/profile",profileRoute);
