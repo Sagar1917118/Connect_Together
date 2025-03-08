@@ -16,6 +16,7 @@ const otherRoutes=require("./routes/otherRoute");
 const fileUpload=require("express-fileupload");
 
 const allowedOrigins = [
+  "*",
   "http://localhost:3000",
    process.env.FRONTEND_URL
 ];
@@ -25,9 +26,9 @@ app.use((req, res, next) => {
   if (allowedOrigins.includes(origin)) {
       res.header("Access-Control-Allow-Origin", origin);
   }
-  res.header("Access-Control-Allow-Credentials", "true");
+  res.header("Access-Control-Allow-Credentials", "*");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.header("Access-Control-Allow-Headers", "Origin","Content-Type, Authorization");
 
   if (req.method === "OPTIONS") {
       return res.sendStatus(200);
