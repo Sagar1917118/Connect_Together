@@ -1,12 +1,10 @@
 import { toast } from "react-hot-toast"
 import { setLoading, setToken } from "../../slices/authSlice"
-import { resetCart } from "../../slices/cartSlice"
 import { setUser } from "../../slices/profileSlice"
-import {setSignupData} from "../../slices/authSlice"
 import { apiConnector } from "../apiconnector"
 import { endpoints } from "../apis"
 import axios from "axios";
-import {setUserId, setRollNumber,setGrade} from "../../slices/authSlice";
+import {setUserId} from "../../slices/authSlice";
 /*
  const response = await apiConnector("POST", LOGIN_API, {
         email,
@@ -121,7 +119,6 @@ export function logout(navigate) {
   return (dispatch) => {
     dispatch(setToken(null))
     dispatch(setUser(null))
-    dispatch(resetCart())
     localStorage.removeItem("token")
     localStorage.removeItem("user")
     toast.success("Logged Out")

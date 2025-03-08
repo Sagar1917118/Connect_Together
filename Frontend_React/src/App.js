@@ -15,10 +15,7 @@ import Login from './pages/Login';
 import VerifyEmail from './pages/VerifyEmail';
 import ForgotPassword from './pages/ForgotPassword';
 import UpdatePassword from './pages/UpdatePassword';
-import About from './pages/About';
-import Contact from './pages/Contact';
 import Dashboard from './pages/Dashboard';
-import AttendQuestionPage from './pages/AttendQuestionPage';
 import StudentInfo from './pages/StudentInfo';
 import InstructorInfo from './pages/InstructorInfo';
 import NotificationPage from './pages/NotificationPage';
@@ -75,8 +72,6 @@ const App = () => {
         <Route path="/forgot-password" element={<OpenRoute><ForgotPassword /></OpenRoute>} />
         <Route path="/update-password/:id" element={<OpenRoute><UpdatePassword /></OpenRoute>} />
         <Route path="/verify-email" element={<OpenRoute><VerifyEmail /></OpenRoute>} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
 
         {/* Dashboard Routes */}
         <Route element={<PrivateRoute><Dashboard /></PrivateRoute>}>
@@ -102,7 +97,6 @@ const App = () => {
         {(!user||user?.role == "Instructor" )&& (
           <>
             <Route path="/notification" element={<PrivateRoute><NotificationPage /></PrivateRoute>} />
-            <Route path="/attend-question/:id" element={<PrivateRoute><AttendQuestionPage /></PrivateRoute>} />
             <Route path="/marks" element={<PrivateRoute><ExamTeacher /></PrivateRoute>} />
             <Route path="/marks/create-exam" element={<PrivateRoute><CreateExam /></PrivateRoute>} />
             <Route path="/mydiary" element={<PrivateRoute><CreateDiary /></PrivateRoute>} />

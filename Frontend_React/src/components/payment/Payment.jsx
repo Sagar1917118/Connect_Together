@@ -1,7 +1,6 @@
 import React,{useState} from 'react'
 import axios from 'axios'
 import { useSelector } from 'react-redux';
-import image from "../../assets/online_payment.png";
 import { NavLink } from 'react-router-dom';
 import toast from 'react-hot-toast'
 const  Payment= () => {

@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { Link, matchPath, useLocation } from "react-router-dom";
 import logo from "../../assets/Hero/connect_together.png";
 import { NavbarLinks } from "../../data/navbar-links";
-import { ACCOUNT_TYPE } from "../../utils/constants";
 import ProfileDropdown from "../core/Auth/ProfileDropDown";
 
 function Navbar() {
