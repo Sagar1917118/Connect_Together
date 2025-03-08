@@ -44,7 +44,7 @@ const HomeWorkReview = () => {
   };
 
   return (
-    <div className=" mx-auto w-[50%] my-8 border-2 p-4 border-gray-400 rounded-md">
+    <div className=" mx-auto w-11/12 sm:w-[50%] my-8 border-2 p-4 border-gray-400 rounded-md">
       <p className='font-bold text-lg'>Add HomeWork Review For Student</p>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>

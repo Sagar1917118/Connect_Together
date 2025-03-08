@@ -45,7 +45,7 @@ const CreateDiary = () => {
         <div className='showAllSubject'>
             {   
                 !allSubject ? (<Skeleton></Skeleton>) : (
-                        <div className="allSubjects grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                        <div className="allSubjects flex flex-wrap gap-4">
                         {allSubject.map((subject) => (
                             <h1
                             key={subject._id}
