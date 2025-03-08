@@ -16,37 +16,40 @@ const otherRoutes=require("./routes/otherRoute");
 const fileUpload=require("express-fileupload");
 
 const allowedOrigins = [
-  "*",
   "http://localhost:3000",
-   `${process.env.FRONTEND_URL}/*`
+   process.env.FRONTEND_URL
 ];
 
-app.use((req, res, next) => {
+const corsMiddleware = (req, res, next) => {
   const origin = req.headers.origin;
+  
   if (allowedOrigins.includes(origin)) {
-      res.header("Access-Control-Allow-Origin", origin);
+      res.setHeader("Access-Control-Allow-Origin", origin);
   }
-  res.header("Access-Control-Allow-Credentials", "*");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.header("Access-Control-Allow-Headers", "Origin","Content-Type, Authorization");
+
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 
   if (req.method === "OPTIONS") {
       return res.sendStatus(200);
   }
+
   next();
-});
+};
 
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({extended:false}));
 app.use(fileUpload({useTempFiles:true,tempFileDir:'/tmp/'} ));
+
 dbConnect();
-app.use("/api/v1/auth",authRoute);
-app.use("/api/v1/profile",profileRoute);
-app.use("/api/v1/course",courseRoute);
-app.use("/api/v1/doubt",myRoutes);
-app.use("/api/v1/other",otherRoutes);
+app.use("/api/v1/auth",corsMiddleware,authRoute);
+app.use("/api/v1/profile",corsMiddleware,profileRoute);
+app.use("/api/v1/course",corsMiddleware,courseRoute);
+app.use("/api/v1/doubt",corsMiddleware,myRoutes);
+app.use("/api/v1/other",corsMiddleware,otherRoutes);
 
 app.get("/",(req,res)=>{
     return res.send("Welcome to my backend Page");
